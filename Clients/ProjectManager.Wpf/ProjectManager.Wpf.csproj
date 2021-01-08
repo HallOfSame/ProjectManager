@@ -6,4 +6,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\ProjectManager.DataStore.Json\ProjectManager.DataStore.Json.csproj" />
+  </ItemGroup>
+
 </Project>

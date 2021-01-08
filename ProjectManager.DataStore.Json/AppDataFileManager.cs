@@ -15,9 +15,7 @@ namespace ProjectManager.DataStore.Json
 
         public FileStream GetLocalDataFile()
         {
-            var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-
-            var fullFilePath = Path.Combine(appDataFolder, FileName);
+            var fullFilePath = GetLocalFilePath();
 
             if (!File.Exists(fullFilePath))
             {
@@ -25,6 +23,30 @@ namespace ProjectManager.DataStore.Json
             }
 
             return File.OpenRead(fullFilePath);
+        }
+
+        public FileStream GetOrCreateLocalDataFile()
+        {
+            try
+            {
+                return GetLocalDataFile();
+            }
+            catch (FileNotFoundException)
+            {
+                return File.Create(GetLocalFilePath());
+            }
+        }
+
+        #endregion
+
+        #region Class Methods
+
+        private static string GetLocalFilePath()
+        {
+            var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+            var fullFilePath = Path.Combine(appDataFolder, FileName);
+            return fullFilePath;
         }
 
         #endregion
