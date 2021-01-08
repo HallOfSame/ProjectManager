@@ -9,6 +9,7 @@ namespace ProjectManager.Models
         public Context()
         {
             Projects = new List<Project>();
+            TimeSlots = new List<TimeSlot>();
         }
 
         #endregion
@@ -16,6 +17,8 @@ namespace ProjectManager.Models
         #region Instance Properties
 
         public List<Project> Projects { get; }
+
+        public List<TimeSlot> TimeSlots { get; }
 
         #endregion
     }

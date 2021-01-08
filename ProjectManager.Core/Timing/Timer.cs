@@ -12,15 +12,19 @@ namespace ProjectManager.Core.Timing
 
         private readonly Stopwatch currentTaskStopwatch;
 
+        private readonly Context context;
+
         private TimeSlot currentTimeSlot;
 
         #endregion
 
         #region Constructors
 
-        public Timer(Stopwatch currentTaskStopwatch)
+        public Timer(Stopwatch currentTaskStopwatch,
+                     Context context)
         {
             this.currentTaskStopwatch = currentTaskStopwatch;
+            this.context = context;
         }
 
         #endregion
@@ -55,7 +59,7 @@ namespace ProjectManager.Core.Timing
 
             currentTaskStopwatch.Stop();
 
-            // TODO persist this time slot
+            context.TimeSlots.Add(currentTimeSlot);
         }
 
         public void SwitchToNewProject(Project newProject)
