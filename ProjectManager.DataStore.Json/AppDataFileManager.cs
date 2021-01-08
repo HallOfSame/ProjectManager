@@ -45,7 +45,9 @@ namespace ProjectManager.DataStore.Json
         {
             var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-            var fullFilePath = Path.Combine(appDataFolder, FileName);
+            var ourFolder = Path.Combine(appDataFolder, "ProjectManager");
+
+            var fullFilePath = Path.Combine(ourFolder, FileName);
             return fullFilePath;
         }
 

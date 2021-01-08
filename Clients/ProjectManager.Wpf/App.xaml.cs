@@ -24,11 +24,19 @@ namespace ProjectManager.Wpf
 
             context = await contextLoader.LoadLocalDataAsync();
 
+            context.Projects.Clear();
+
+            context.Projects.Add(new Project("testOne"));
+            context.Projects.Add(new Project("testTwo"));
+
             base.OnStartup(e);
         }
 
-        protected override void OnExit(ExitEventArgs e)
+        protected override async void OnExit(ExitEventArgs e)
         {
+            var contextPersister = new JsonAppDataContextPersister(new AppDataFileManager());
+
+            await contextPersister.PersistContextAsync(context);
 
             base.OnExit(e);
         }
