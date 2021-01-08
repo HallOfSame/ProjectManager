@@ -1,14 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjectManager.DataStore.Json
 {
     public class AppDataFileManager
     {
+        #region Constants
+
         private const string FileName = "ProjectManagerData.json";
+
+        #endregion
+
+        #region Instance Methods
 
         public FileStream GetLocalDataFile()
         {
@@ -23,5 +26,7 @@ namespace ProjectManager.DataStore.Json
 
             return File.OpenRead(fullFilePath);
         }
+
+        #endregion
     }
 }

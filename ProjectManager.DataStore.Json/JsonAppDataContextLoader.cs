@@ -28,24 +28,36 @@ namespace ProjectManager.DataStore.Json
 
         #region Instance Methods
 
+        public Context InitializeNewContext()
+        {
+            return new Context();
+        }
+
         public async Task<Context> LoadLocalDataAsync()
         {
-            string fileText;
-
-            using (var localFile = appDataFileManager.GetLocalDataFile())
+            try
             {
-                using var streamReader = new StreamReader(localFile);
+                string fileText;
 
-                fileText = await streamReader.ReadToEndAsync();
+                await using (var localFile = appDataFileManager.GetLocalDataFile())
+                {
+                    using var streamReader = new StreamReader(localFile);
+
+                    fileText = await streamReader.ReadToEndAsync();
+                }
+
+                var context = JsonConvert.DeserializeObject<Context>(fileText,
+                                                                     new JsonSerializerSettings
+                                                                     {
+                                                                         ContractResolver = new CamelCasePropertyNamesContractResolver()
+                                                                     });
+
+                return context;
             }
-
-            var context = JsonConvert.DeserializeObject<Context>(fileText,
-                                                                 new JsonSerializerSettings
-                                                                 {
-                                                                     ContractResolver = new CamelCasePropertyNamesContractResolver()
-                                                                 });
-
-            return context;
+            catch (FileNotFoundException)
+            {
+                return InitializeNewContext();
+            }
         }
 
         #endregion
